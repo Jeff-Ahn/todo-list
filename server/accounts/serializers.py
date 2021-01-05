@@ -1,8 +1,9 @@
 from rest_framework import serializers
-from .models import Account
+from .models import User
 
 
 class SignUpSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Account
+        model = User
         fields = ['email', 'username', 'password']
+

@@ -70,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-AUTH_USER_MODEL = 'accounts.Account'
+AUTH_USER_MODEL = 'accounts.User'
 
 WSGI_APPLICATION = 'todo.wsgi.application'
 
