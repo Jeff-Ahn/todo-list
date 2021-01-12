@@ -11,22 +11,26 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
 
     @action(
-        methods=['patch'],
-        detail=True,
+        methods=['PATCH'],
+        url_name='change-password',
+        url_path='password',
+        detail=False,
     )
-    def change_password(self, request, pk):
-        user = self.get_object()
+    def change_password(self, request):
+        user = request.user
         new_password = request.data['password']
         user.set_password(new_password)
         user.save()
         return Response(status.HTTP_200_OK)
 
     @action(
-        methods=['patch'],
-        detail=True,
+        methods=['PATCH'],
+        url_name='change-username',
+        url_path='username',
+        detail=False,
     )
-    def change_name(self, request, pk):
-        user = self.get_object()
+    def change_name(self, request):
+        user = request.user
         new_username = request.data['username']
         user.set_username(new_username)
         user.save()
