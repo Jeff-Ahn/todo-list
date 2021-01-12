@@ -3,6 +3,7 @@ from .serializers import UserSerializer
 from .models import User
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework import status
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -18,8 +19,7 @@ class UserViewSet(viewsets.ModelViewSet):
         new_password = request.data['password']
         user.set_password(new_password)
         user.save()
-        serializer = self.get_serializer(user)
-        return Response(serializer.data)
+        return Response(status.HTTP_200_OK)
 
     @action(
         methods=['patch'],
@@ -30,5 +30,4 @@ class UserViewSet(viewsets.ModelViewSet):
         new_username = request.data['username']
         user.set_username(new_username)
         user.save()
-        serializer = self.get_serializer(user)
-        return Response(serializer.data)
+        return Response(status.HTTP_200_OK)
