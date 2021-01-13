@@ -4,6 +4,8 @@ from .models import User
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework.authtoken.views import ObtainAuthToken
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -35,3 +37,10 @@ class UserViewSet(viewsets.ModelViewSet):
         user.set_username(new_username)
         user.save()
         return Response(status.HTTP_200_OK)
+
+
+class LoginViewSet(viewsets.ViewSet):
+    serializer_class = AuthTokenSerializer
+
+    def create(self, request):
+        return ObtainAuthToken().post(request)
