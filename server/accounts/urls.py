@@ -5,8 +5,9 @@ from django.urls import path, include
 router = routers.DefaultRouter()
 
 router.register('user', viewset=views.UserViewSet)
-router.register('login', viewset=views.LoginViewSet, basename='login')
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path('login/', views.LoginAPIView.as_view()),
+    path('logout/', views.LogoutAPIView.as_view())
 ]
