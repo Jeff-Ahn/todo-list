@@ -52,11 +52,12 @@ class LoginAPIView(APIView):
 
         user = authenticate(email=email, password=password)
 
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return Response(status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        if user is None:
+            raise ValidationError('가입하지 않은 이메일이거나, 잘못된 비밀번호 입니다.')
+
+        if user.is_active:
+            login(request, user)
+            return Response(status=status.HTTP_200_OK)
 
 
 class LogoutAPIView(APIView):
