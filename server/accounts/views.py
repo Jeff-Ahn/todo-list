@@ -4,6 +4,9 @@ from .models import User
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.exceptions import ValidationError
+from django.contrib.auth import authenticate, login, logout
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -34,4 +37,30 @@ class UserViewSet(viewsets.ModelViewSet):
         new_username = request.data['username']
         user.set_username(new_username)
         user.save()
-        return Response(status.HTTP_200_OK)
+        return Response(status=status.HTTP_200_OK)
+
+
+class LoginAPIView(APIView):
+    def post(self, request):
+        data = request.data
+
+        email = data.get('email', None)
+        password = data.get('password', None)
+
+        if not email or not password:
+            raise ValidationError('이메일과 패스워드를 확인하세요.')
+
+        user = authenticate(email=email, password=password)
+
+        if user is None:
+            raise ValidationError('가입하지 않은 이메일이거나, 잘못된 비밀번호 입니다.')
+
+        if user.is_active:
+            login(request, user)
+            return Response(status=status.HTTP_200_OK)
+
+
+class LogoutAPIView(APIView):
+    def get(self, request):
+        logout(request)
+        return Response(status=status.HTTP_200_OK)
