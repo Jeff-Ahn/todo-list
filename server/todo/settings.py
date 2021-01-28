@@ -21,10 +21,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'todo',
     'rest_framework',
     'accounts',
-    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -118,3 +116,5 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
     ]
 }
+
+DATE_INPUT_FORMATS = ['YYYY-MM-DD']

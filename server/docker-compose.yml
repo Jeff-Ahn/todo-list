@@ -10,6 +10,6 @@ services:
       MYSQL_ROOT_PASSWORD: rootpw
       MYSQL_DATABASE: todo
       MYSQL_USER: ahu8867
-      MYSQL_PASSWORD: 8867
+      MYSQL_PASSWORD: ahu8867pw
     volumes:
       - './.mariadb:/var/lib/mysql'
