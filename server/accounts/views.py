@@ -89,9 +89,14 @@ class LogoutAPIView(APIView):
 
 class PersonViewSet(viewsets.ModelViewSet):
     serializer_class = PersonSerializer
+    lookup_field = 'id'
+    http_method_names = ['get', 'post', 'put']
 
     def get_queryset(self):
         return Person.objects.select_related('user')
 
     def create(self, request, *args, **kwargs):
         return super().create(request, args, kwargs)
+
+    def update(self, request, *args, **kwargs):
+        return super().update(request, args, kwargs)

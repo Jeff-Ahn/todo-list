@@ -32,20 +32,16 @@ class PersonSerializer(serializers.ModelSerializer):
     user = UserSerializer()
 
     def create(self, validated_data):
-        user_data = validated_data['user']
+        user_data = validated_data.pop('user', None)
 
         user = User.objects.create_user(email=user_data['email'], password=user_data['password'])
-        person = Person.objects.create(
-                                        user=user,
-                                        first_name=validated_data['first_name'],
-                                        last_name=validated_data['last_name'],
-                                        nickname=validated_data['nickname'],
-                                        sex=validated_data['sex']
-                                       )
+        person = Person.objects.create(user=user, **validated_data)
         return person
 
     def update(self, instance, validated_data):
-        print(validated_data)
+        validated_data.pop('user', None)
+
+        return super(PersonSerializer, self).update(instance, validated_data)
 
     def validate(self, attrs):
         if not attrs['first_name'] or \
