@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.exceptions import ValidationError
+from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate, login, logout
 
 
@@ -47,19 +48,6 @@ class AccountViewSet(viewsets.ViewSet):
         if signup_person_serializer.is_valid(raise_exception=True):
             return signup_person_serializer.save()
 
-    # @action(
-    #     methods=['PATCH'],
-    #     url_name='change-username',
-    #     url_path='username',
-    #     detail=False,
-    # )
-    # def change_name(self, request):
-    #     user = request.user
-    #     new_username = request.data['username']
-    #     user.set_username(new_username)
-    #     user.save()
-    #     return Response(status=status.HTTP_200_OK)
-
 
 class LoginAPIView(APIView):
     def post(self, request):
@@ -91,6 +79,7 @@ class PersonViewSet(viewsets.ModelViewSet):
     serializer_class = PersonSerializer
     lookup_field = 'id'
     http_method_names = ['get', 'post', 'put']
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         return Person.objects.select_related('user')
@@ -99,4 +88,9 @@ class PersonViewSet(viewsets.ModelViewSet):
         return super().create(request, args, kwargs)
 
     def update(self, request, *args, **kwargs):
-        return super().update(request, args, kwargs)
+        request_person = request.user.person
+        target_person = Person.objects.get(id=kwargs['id'])
+        if request_person == target_person:
+            return super().update(request, args, kwargs)
+        else:
+            return Response(status=status.HTTP_403_FORBIDDEN)
