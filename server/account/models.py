@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-from todo import settings
+
+MALE = 'Male'
+FEMALE = 'Female'
 
 
 class UserManager(BaseUserManager):
@@ -48,12 +50,9 @@ class User(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
-    # def set_username(self, new_username):
-    #     self.username = new_username
-
 
 class Person(models.Model):
-    SEX_CHOICES = [('Male', 'Male'), ('Female', 'Female')]
+    SEX_CHOICES = [('Male', MALE), ('Female', FEMALE)]
 
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)

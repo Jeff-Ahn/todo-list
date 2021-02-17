@@ -14,10 +14,9 @@ class AccountViewSet(viewsets.ViewSet):
 
     def create(self, request):
         data = request.data
-        print('data:', data)
 
         user = self._create_user(data)
-        person = self._create_person(data['first_name'], data['last_name'], user)
+        self._create_person(data['first_name'], data['last_name'], user)
         return Response(status=status.HTTP_201_CREATED)
 
     @action(
@@ -35,6 +34,7 @@ class AccountViewSet(viewsets.ViewSet):
 
     def _create_user(self, data):
         user_serializer = UserSerializer(data=data)
+
         if user_serializer.is_valid(raise_exception=True):
             return user_serializer.save()
 
@@ -45,6 +45,7 @@ class AccountViewSet(viewsets.ViewSet):
             'last_name': last_name
         }
         signup_person_serializer = SignUpPersonSerializer(data=person_data)
+
         if signup_person_serializer.is_valid(raise_exception=True):
             return signup_person_serializer.save()
 
@@ -90,6 +91,7 @@ class PersonViewSet(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         request_person = request.user.person
         target_person = Person.objects.get(id=kwargs['id'])
+
         if request_person == target_person:
             return super().update(request, args, kwargs)
         else:
