@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -9,7 +10,7 @@ SECRET_KEY = 'yv#hvq$*i56x%&n8ssoi1vwrb%%e-#8srg91dg2dxb--kwy%it'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -118,3 +119,5 @@ REST_FRAMEWORK = {
 }
 
 DATE_INPUT_FORMATS = ['YYYY-MM-DD']
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
