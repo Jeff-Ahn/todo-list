@@ -43,13 +43,6 @@ class PersonSerializer(serializers.ModelSerializer):
 
         return super(PersonSerializer, self).update(instance, validated_data)
 
-    def validate(self, attrs):
-        if not attrs['first_name'] or \
-                not attrs['last_name'] or \
-                not attrs['user']['email']:
-            raise ValueError('필수 정보를 입력하세요.')
-        return attrs
-
     class Meta:
         model = Person
         fields = ['user', 'first_name', 'last_name', 'nickname', 'sex']

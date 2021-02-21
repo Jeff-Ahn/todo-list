@@ -10,7 +10,7 @@ SECRET_KEY = 'yv#hvq$*i56x%&n8ssoi1vwrb%%e-#8srg91dg2dxb--kwy%it'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -68,7 +68,7 @@ DATABASES = {
         'NAME': 'todo',
         'USER': 'ahu8867',
         'PASSWORD': 'ahu8867pw',
-        'HOST': '127.0.0.1',
+        'HOST': 'mariadb',
         'PORT': '3306'
     }
 }
@@ -113,6 +113,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ]

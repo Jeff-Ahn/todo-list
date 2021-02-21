@@ -56,8 +56,8 @@ class Person(models.Model):
 
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    nickname = models.CharField(max_length=255)
-    sex = models.CharField(max_length=6, choices=SEX_CHOICES, default='Male')
+    nickname = models.CharField(max_length=255, blank=True)
+    sex = models.CharField(max_length=6, choices=SEX_CHOICES, blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
