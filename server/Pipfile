@@ -8,7 +8,7 @@ django = "*"
 djangorestframework = "*"
 mysqlclient = "*"
 gunicorn = "*"
-black = "*"
+yapf = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"
