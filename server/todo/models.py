@@ -7,7 +7,7 @@ class Todo(models.Model):
     is_done = models.BooleanField(default=False)
     owner = models.ForeignKey(
         User, related_name="todos",
-        on_delete=models.CASCADE, null=True
+        on_delete=models.CASCADE, null=True,
     )
 
     def __str__(self):
