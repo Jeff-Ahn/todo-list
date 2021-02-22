@@ -12,7 +12,7 @@ services:
       - todo-app
   todo-app:
     build: .
-    command: gunicorn todo.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - '.:/todolist'
     ports:
@@ -27,7 +27,7 @@ services:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: rootpw
-      MYSQL_DATABASE: todo
+      MYSQL_DATABASE: backend
       MYSQL_USER: ahu8867
       MYSQL_PASSWORD: ahu8867pw
     volumes:

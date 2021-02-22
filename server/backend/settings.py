@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'account',
+    'todo'
 ]
 
 MIDDLEWARE = [
@@ -36,7 +37,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'todo.urls'
+ROOT_URLCONF = 'backend.urls'
 
 TEMPLATES = [
     {
@@ -56,7 +57,7 @@ TEMPLATES = [
 
 AUTH_USER_MODEL = 'account.User'
 
-WSGI_APPLICATION = 'todo.wsgi.application'
+WSGI_APPLICATION = 'backend.wsgi.application'
 
 
 # Database
@@ -68,7 +69,7 @@ DATABASES = {
         'NAME': 'todo',
         'USER': 'ahu8867',
         'PASSWORD': 'ahu8867pw',
-        'HOST': 'mariadb',
+        'HOST': '127.0.0.1',
         'PORT': '3306'
     }
 }
