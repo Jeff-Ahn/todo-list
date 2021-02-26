@@ -4,3 +4,6 @@
 /server/.mariadb
 /server/staticfiles
 __pycache__
+
+client/dist
+/client/node_modules

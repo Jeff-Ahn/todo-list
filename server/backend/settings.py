@@ -67,8 +67,8 @@ DATABASES = {
         "NAME": "todo",
         "USER": "ahu8867",
         "PASSWORD": "ahu8867pw",
-        "HOST": "127.0.0.1",
-        # "HOST": "mariadb",
+        # "HOST": "127.0.0.1",
+        "HOST": "mariadb",
         "PORT": "3306",
     }
 }
