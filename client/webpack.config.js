@@ -40,7 +40,7 @@ module.exports = {
 
   devServer: {
     host: 'localhost',
-    port: port,
     open: true,
+    port,
   },
 };
