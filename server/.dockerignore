@@ -1,0 +1,4 @@
+static
+migrations/*
+.mariadb
+__pycache__
