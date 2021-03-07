@@ -1,9 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
-MALE = 'Male'
-FEMALE = 'Female'
-
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None):
@@ -17,10 +14,7 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password):
-        user = self.create_user(
-            email=email,
-            password=password
-        )
+        user = self.create_user(email=email, password=password)
         user.is_admin = True
         user.is_staff = True
         user.is_superuser = True
@@ -30,7 +24,9 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     email = models.EmailField(verbose_name='email', max_length=60, unique=True)
-    created_at = models.DateTimeField(verbose_name='created_at', auto_now_add=True, editable=False)
+    created_at = models.DateTimeField(verbose_name='created_at',
+                                      auto_now_add=True,
+                                      editable=False)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
@@ -52,7 +48,10 @@ class User(AbstractBaseUser):
 
 
 class Person(models.Model):
-    SEX_CHOICES = [('Male', MALE), ('Female', FEMALE)]
+    MALE = 'M'
+    FEMALE = 'F'
+
+    SEX_CHOICES = [(MALE, 'MALE'), (FEMALE, 'FEMALE')]
 
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
