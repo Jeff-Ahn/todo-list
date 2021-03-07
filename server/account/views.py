@@ -11,7 +11,6 @@ from django.contrib.auth import authenticate, login, logout
 
 
 class AccountViewSet(viewsets.ViewSet):
-
     def create(self, request):
         data = request.data
 

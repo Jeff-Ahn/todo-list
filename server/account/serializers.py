@@ -15,10 +15,8 @@ class UserSerializer(serializers.ModelSerializer):
                                      max_length=128)
 
     def create(self, validated_data):
-        return User.objects.create_user(
-            email=validated_data['email'],
-            password=validated_data['password']
-        )
+        return User.objects.create_user(email=validated_data['email'],
+                                        password=validated_data['password'])
 
     def update(self, instance, validated_data):
         raise NotImplementedError('잘못된 요청입니다.')
@@ -34,7 +32,8 @@ class PersonSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user_data = validated_data.pop('user', None)
 
-        user = User.objects.create_user(email=user_data['email'], password=user_data['password'])
+        user = User.objects.create_user(email=user_data['email'],
+                                        password=user_data['password'])
         person = Person.objects.create(user=user, **validated_data)
         return person
 
