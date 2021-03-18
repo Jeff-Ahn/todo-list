@@ -1,2 +1,6 @@
 /.idea
-/server/accounts/migrations
+/server/*/migrations
+/server/.mariadb
+/server/static
+__pycache__
+CONTAINER_ALREADY_STARTED_PLACEHOLDER

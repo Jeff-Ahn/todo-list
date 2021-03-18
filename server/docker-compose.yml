@@ -1,6 +1,23 @@
 version: "3.8"
 
 services:
+  todo-app:
+    build: .
+    ports:
+      - '8000:8000'
+    depends_on:
+      - 'mariadb'
+
+  nginx:
+      image: nginx:latest
+      ports:
+        - '80:80'
+      volumes:
+        - './config/nginx:/etc/nginx/conf.d'
+        - './static:/static'
+      depends_on:
+        - 'todo-app'
+
   mariadb:
     image: mariadb:10.5
     restart: always
@@ -10,6 +27,6 @@ services:
       MYSQL_ROOT_PASSWORD: rootpw
       MYSQL_DATABASE: todo
       MYSQL_USER: ahu8867
-      MYSQL_PASSWORD: 8867
+      MYSQL_PASSWORD: ahu8867pw
     volumes:
       - './.mariadb:/var/lib/mysql'

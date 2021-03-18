@@ -3,27 +3,18 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, username, password=None):
+    def create_user(self, email, password=None):
         if not email:
             raise ValueError("Users must have an email address.")
-        if not username:
-            raise ValueError("Users must have an username.")
 
-        user = self.model(
-            email=self.normalize_email(email),
-            username=username
-        )
+        user = self.model(email=self.normalize_email(email))
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, username, password):
-        user = self.create_user(
-            email=email,
-            username=username,
-            password=password
-        )
+    def create_superuser(self, email, password):
+        user = self.create_user(email=email, password=password)
         user.is_admin = True
         user.is_staff = True
         user.is_superuser = True
@@ -33,17 +24,18 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     email = models.EmailField(verbose_name='email', max_length=60, unique=True)
-    username = models.CharField(max_length=30)
-    created_at = models.DateTimeField(verbose_name='created_at', auto_now_add=True, editable=False)
+    created_at = models.DateTimeField(verbose_name='created_at',
+                                      auto_now_add=True,
+                                      editable=False)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = []
 
-    objects = UserManager();
+    objects = UserManager()
 
     def __str__(self):
         return self.email
@@ -54,5 +46,18 @@ class User(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
-    def set_username(self, new_username):
-        self.username = new_username
+
+class Person(models.Model):
+    MALE = 'M'
+    FEMALE = 'F'
+
+    SEX_CHOICES = [(MALE, 'MALE'), (FEMALE, 'FEMALE')]
+
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    nickname = models.CharField(max_length=255, blank=True)
+    sex = models.CharField(max_length=6, choices=SEX_CHOICES, blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.first_name + ' ' + self.last_name
