@@ -1,24 +1,22 @@
 version: "3.8"
 
 services:
-  nginx:
-    image: nginx:latest
-    ports:
-      - '80:80'
-    volumes:
-      - './config/nginx:/etc/nginx/conf.d'
-      - './staticfiles:/static'
-    depends_on:
-      - todo-app
   todo-app:
     build: .
-    command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
-    volumes:
-      - '.:/todolist'
     ports:
       - '8000:8000'
     depends_on:
-      - mariadb
+      - 'mariadb'
+
+  nginx:
+      image: nginx:latest
+      ports:
+        - '80:80'
+      volumes:
+        - './config/nginx:/etc/nginx/conf.d'
+        - './static:/static'
+      depends_on:
+        - 'todo-app'
 
   mariadb:
     image: mariadb:10.5

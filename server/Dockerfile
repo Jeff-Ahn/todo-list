@@ -12,4 +12,9 @@ RUN pip install pipenv && pipenv install --system --ignore-pipfile --dev
 
 COPY . /todolist/
 
+RUN apt-get update && apt-get install netcat-openbsd -y
+
+RUN chmod +x /todolist/entrypoint.sh
+ENTRYPOINT ["/todolist/entrypoint.sh"]
+
 EXPOSE 8000
