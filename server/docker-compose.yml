@@ -25,7 +25,7 @@ services:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: rootpw
-      MYSQL_DATABASE: backend
+      MYSQL_DATABASE: todo
       MYSQL_USER: ahu8867
       MYSQL_PASSWORD: ahu8867pw
     volumes:
