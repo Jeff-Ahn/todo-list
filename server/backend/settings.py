@@ -62,6 +62,9 @@ WSGI_APPLICATION = "backend.wsgi.application"
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
+    # Docker 환경일 경우, 호스트를 'mariadb'로
+    # local 환경일 경우, 호스트를 'localhost' or '127.0.0.1'
+    # 로 설정하여 테스트 바랍니다.
     "default": {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "todo",

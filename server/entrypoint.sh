@@ -17,7 +17,6 @@ if [ ! -e $CONTAINER_ALREADY_STARTED ]; then
     echo "Rum makemigrations 'account' App"
     python manage.py makemigrations account
 
-
 else
     echo "-- Not first container startup --"
 fi
