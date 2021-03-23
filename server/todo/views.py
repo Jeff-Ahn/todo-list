@@ -17,8 +17,8 @@ class TodoViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         user = request.user
         data = request.data
-        ownerId = data['owner']
-        owner = User.objects.get(id=ownerId)
+        owner_id = data['owner']
+        owner = User.objects.get(id=owner_id)
 
         if owner != user:
             raise PermissionDenied('다른 사용자의 todo를 생성할 수 없습니다.')
