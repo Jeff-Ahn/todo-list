@@ -3,12 +3,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import PermissionDenied
 
 from .serializers import TodoSerializers
-from .permissions import IsOwner
+from .permissions import IsOwnerForTodo
 from account.models import User
 
 
 class TodoViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated, IsOwner]
+    permission_classes = [IsAuthenticated, IsOwnerForTodo]
     serializer_class = TodoSerializers
 
     def get_queryset(self):
