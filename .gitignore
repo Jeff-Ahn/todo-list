@@ -1,6 +1,6 @@
 /.idea
 /server/*/migrations/**
-/server/.mariadb
+/.mariadb
 /server/static
 __pycache__
 
