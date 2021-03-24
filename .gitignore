@@ -1,7 +1,7 @@
 /.idea
 /server/*/migrations/**
 /.mariadb
-/server/static
+/static
 __pycache__
 
 !/server/*/migrations/__init__.py
