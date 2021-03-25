@@ -2,7 +2,7 @@ from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "yv#hvq$*i56x%&n8ssoi1vwrb%%e-#8srg91dg2dxb--kwy%it"
@@ -22,8 +22,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    "account",
-    "todo",
+    "server.account",
+    "server.todo",
 ]
 
 MIDDLEWARE = [
@@ -70,7 +70,6 @@ DATABASES = {
         "NAME": "todo",
         "USER": "ahu8867",
         "PASSWORD": "ahu8867pw",
-        # "HOST": "127.0.0.1",
         "HOST": "mariadb",
         "PORT": "3306",
     }
@@ -128,4 +127,4 @@ REST_FRAMEWORK = {
 
 DATE_INPUT_FORMATS = ["YYYY-MM-DD"]
 
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")

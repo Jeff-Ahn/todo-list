@@ -1,5 +1,5 @@
 from django.db import models
-from account.models import User
+from server.account.models import User
 
 
 class Todo(models.Model):

@@ -4,7 +4,7 @@ from rest_framework.exceptions import PermissionDenied
 
 from .serializers import TodoSerializers
 from .permissions import IsOwnerForTodo
-from account.models import User
+from server.account.models import User
 
 
 class TodoViewSet(viewsets.ModelViewSet):
