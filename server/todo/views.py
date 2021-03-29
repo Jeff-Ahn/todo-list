@@ -1,10 +1,10 @@
-from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.exceptions import PermissionDenied
+from django.db import transaction
 
 from .serializers import TodoSerializers
 from .permissions import IsOwnerForTodo
-from server.account.models import User
+from rest_framework.response import Response
+from rest_framework import viewsets, status
 
 
 class TodoViewSet(viewsets.ModelViewSet):
@@ -14,13 +14,12 @@ class TodoViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return self.request.user.todos.all()
 
-    def create(self, request, *args, **kwargs):
-        user = request.user
+    @transaction.atomic
+    def create(self, request):
         data = request.data
-        owner_id = data['owner']
-        owner = User.objects.get(id=owner_id)
 
-        if owner != user:
-            raise PermissionDenied('다른 사용자의 todo를 생성할 수 없습니다.')
+        todo_serializer = TodoSerializers(data=data, context={'request': request})
+        todo_serializer.is_valid(raise_exception=True)
+        todo_serializer.save()
 
-        return super().create(request, args, kwargs)
+        return Response(None, status=status.HTTP_201_CREATED)
