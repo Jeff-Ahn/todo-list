@@ -12,10 +12,18 @@ class TodoSerializers(serializers.ModelSerializer):
     def create(self, validated_data):
         user = self.context['request'].user
 
-        todo = Todo.objects.create(
-            owner=user,
-            is_done=validated_data['is_done'],
-            content=validated_data['content']
-            )
+        todo = Todo.objects.create(owner=user,
+                                   is_done=validated_data['is_done'],
+                                   content=validated_data['content'])
 
         return todo
+
+    @transaction.atomic
+    def update(self, instance, validated_data):
+        user = self.context['request'].user
+
+        instance.owner = user
+        instance.is_done = validated_data['is_done']
+        instance.content = validated_data['content']
+
+        return instance

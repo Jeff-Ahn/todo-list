@@ -18,8 +18,21 @@ class TodoViewSet(viewsets.ModelViewSet):
     def create(self, request):
         data = request.data
 
-        todo_serializer = TodoSerializers(data=data, context={'request': request})
+        todo_serializer = TodoSerializers(data=data,
+                                          context={'request': request})
         todo_serializer.is_valid(raise_exception=True)
         todo_serializer.save()
 
         return Response(None, status=status.HTTP_201_CREATED)
+
+    @transaction.atomic
+    def update(self, request, pk):
+        data = request.data
+        todo_serializer = TodoSerializers(data=data,
+                                          context={'request': request})
+        todo_serializer.is_valid(raise_exception=True)
+        instance = self.get_object()
+        todo_serializer.update(instance, todo_serializer.validated_data)
+        instance.save()
+
+        return Response(None, status=status.HTTP_200_OK)
