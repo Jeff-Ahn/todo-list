@@ -4,5 +4,4 @@ static
 migrations/*
 .mariadb
 __pycache__
-CONTAINER_ALREADY_STARTED_PLACEHOLDER
 .dockerignore

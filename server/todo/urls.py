@@ -1,7 +1,7 @@
-from django.contrib import admin
-from django.urls import path, include
+from rest_framework import routers
+from . import views
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include('account.urls'))
-]
+router = routers.DefaultRouter()
+router.register("todo", viewset=views.TodoViewSet, basename="todo")
+
+urlpatterns = router.urls

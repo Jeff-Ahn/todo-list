@@ -15,18 +15,18 @@ class AccountViewSet(viewsets.ViewSet):
         data = request.data
 
         user = self._create_user(data)
-        self._create_person(data['first_name'], data['last_name'], user)
+        self._create_person(data["first_name"], data["last_name"], user)
         return Response(status=status.HTTP_201_CREATED)
 
     @action(
-        methods=['PATCH'],
-        url_name='change-password',
-        url_path='password',
+        methods=["PATCH"],
+        url_name="change-password",
+        url_path="password",
         detail=False,
     )
     def change_password(self, request):
         user = request.user
-        new_password = request.data['password']
+        new_password = request.data["password"]
         user.set_password(new_password)
         user.save()
         return Response(status.HTTP_200_OK)
@@ -39,9 +39,9 @@ class AccountViewSet(viewsets.ViewSet):
 
     def _create_person(self, first_name, last_name, user):
         person_data = {
-            'user': user.pk,
-            'first_name': first_name,
-            'last_name': last_name
+            "user": user.pk,
+            "first_name": first_name,
+            "last_name": last_name,
         }
         signup_person_serializer = SignUpPersonSerializer(data=person_data)
 
@@ -53,16 +53,16 @@ class LoginAPIView(APIView):
     def post(self, request):
         data = request.data
 
-        email = data.get('email', None)
-        password = data.get('password', None)
+        email = data.get("email", None)
+        password = data.get("password", None)
 
         if not email or not password:
-            raise ValidationError('이메일과 패스워드를 확인하세요.')
+            raise ValidationError("이메일과 패스워드를 확인하세요.")
 
         user = authenticate(email=email, password=password)
 
         if user is None:
-            raise ValidationError('가입하지 않은 이메일이거나, 잘못된 비밀번호 입니다.')
+            raise ValidationError("가입하지 않은 이메일이거나, 잘못된 비밀번호 입니다.")
 
         if user.is_active:
             login(request, user)
@@ -77,19 +77,19 @@ class LogoutAPIView(APIView):
 
 class PersonViewSet(viewsets.ModelViewSet):
     serializer_class = PersonSerializer
-    lookup_field = 'id'
-    http_method_names = ['get', 'post', 'put']
+    lookup_field = "id"
+    http_method_names = ["get", "post", "put"]
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Person.objects.select_related('user')
+        return Person.objects.select_related("user")
 
     def create(self, request, *args, **kwargs):
         return super().create(request, args, kwargs)
 
     def update(self, request, *args, **kwargs):
         request_person = request.user.person
-        target_person = Person.objects.get(id=kwargs['id'])
+        target_person = Person.objects.get(id=kwargs["id"])
 
         if request_person == target_person:
             return super().update(request, args, kwargs)

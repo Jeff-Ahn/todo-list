@@ -4,12 +4,13 @@ from .models import User, Person
 
 
 class UserSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(max_length=255,
-                                   validators=[
-                                       UniqueValidator(
-                                           queryset=User.objects.all(),
-                                           message="이미 동일한 이메일 주소로 가입되어 있습니다.")
-                                   ])
+    email = serializers.EmailField(
+        max_length=255,
+        validators=[
+            UniqueValidator(queryset=User.objects.all(),
+                            message="이미 동일한 이메일 주소로 가입되어 있습니다.")
+        ],
+    )
     password = serializers.CharField(write_only=True,
                                      required=True,
                                      max_length=128)
@@ -19,18 +20,18 @@ class UserSerializer(serializers.ModelSerializer):
                                         password=validated_data['password'])
 
     def update(self, instance, validated_data):
-        raise NotImplementedError('잘못된 요청입니다.')
+        raise NotImplementedError("잘못된 요청입니다.")
 
     class Meta:
         model = User
-        fields = ['email', 'password']
+        fields = ["email", "password"]
 
 
 class PersonSerializer(serializers.ModelSerializer):
     user = UserSerializer()
 
     def create(self, validated_data):
-        user_data = validated_data.pop('user', None)
+        user_data = validated_data.pop("user", None)
 
         user = User.objects.create_user(email=user_data['email'],
                                         password=user_data['password'])
@@ -38,13 +39,13 @@ class PersonSerializer(serializers.ModelSerializer):
         return person
 
     def update(self, instance, validated_data):
-        validated_data.pop('user', None)
+        validated_data.pop("user", None)
 
         return super(PersonSerializer, self).update(instance, validated_data)
 
     class Meta:
         model = Person
-        fields = ['user', 'first_name', 'last_name', 'nickname', 'sex']
+        fields = ["user", "first_name", "last_name", "nickname", "sex"]
 
 
 class SignUpPersonSerializer(serializers.ModelSerializer):
@@ -58,4 +59,4 @@ class SignUpPersonSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Person
-        fields = ['user', 'first_name', 'last_name']
+        fields = ["user", "first_name", "last_name"]
