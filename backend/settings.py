@@ -70,7 +70,7 @@ DATABASES = {
         "NAME": "todo",
         "USER": "ahu8867",
         "PASSWORD": "ahu8867pw",
-        "HOST": "mariadb",
+        "HOST": "localhost",
         "PORT": "3306",
     }
 }
@@ -128,3 +128,5 @@ REST_FRAMEWORK = {
 DATE_INPUT_FORMATS = ["YYYY-MM-DD"]
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
