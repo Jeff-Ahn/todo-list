@@ -5,7 +5,6 @@ fake = Faker()
 
 
 def create_person() -> Person:
-
     user = User.objects.create(email=fake.safe_email(),
                                password=fake.password())
     person = Person.objects.create(
