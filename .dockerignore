@@ -1,0 +1,7 @@
+Dockerfile*
+docker-compose*
+static
+migrations/*
+.mariadb
+__pycache__
+.dockerignore

@@ -1,9 +1,7 @@
 /.idea
-/server/account/migrations
-/server/todo/migrations
-/server/.mariadb
-/server/staticfiles
+/server/*/migrations/**
+/.mariadb
+/static
 __pycache__
 
-client/dist
-/client/node_modules
+!/server/*/migrations/__init__.py

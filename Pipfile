@@ -9,6 +9,7 @@ djangorestframework = "*"
 mysqlclient = "*"
 gunicorn = "*"
 yapf = "*"
+faker = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"
