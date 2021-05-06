@@ -10,6 +10,10 @@ fake = Faker()
 class TodoAPITest(CommonAPITestCase):
     def setUp(self) -> None:
         self.person = self.create_person_with_login()
+        self.todo = self._generate_valid_random_todo()
+        self.response = self.client.post(reverse('todo-list'),
+                                         self.todo,
+                                         format='json')
 
     def test__create_todo__when__valid_request__expect__201_created(self):
         new_todo = self._generate_valid_random_todo()
