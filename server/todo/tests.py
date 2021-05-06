@@ -3,7 +3,6 @@ from server.common.api_test import CommonAPITestCase
 from server.todo.models import Todo
 from rest_framework.reverse import reverse
 from faker import Faker
-import json
 
 fake = Faker()
 
