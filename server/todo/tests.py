@@ -11,7 +11,7 @@ class TodoAPITest(CommonAPITestCase):
     def setUp(self) -> None:
         self.person = self.create_person_with_login()
 
-    def test_create_todo(self):
+    def test__create_todo__when__valid_request__expect__201_created(self):
         new_todo = self._generate_valid_random_todo()
         response = self.client.post(reverse('todo-list'),
                                     new_todo,
@@ -19,12 +19,12 @@ class TodoAPITest(CommonAPITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-    def test_get_todo(self):
+    def test__get_todo__when__valid_request__expect__200_ok(self):
         response = self.client.get(reverse('todo-list'))
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_update_todo(self):
+    def test__update_todo_when__valid_request__expect__200_ok(self):
         new_todo = self._generate_valid_random_todo()
         response = self.client.post(reverse('todo-list'),
                                     new_todo,
@@ -44,7 +44,7 @@ class TodoAPITest(CommonAPITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertJSONNotEqual(current_todo, updated_todo)
 
-    def test_delete_todo(self):
+    def test__delete_todo_when__valid_request__expect__204_no_content(self):
         new_todo = self._generate_valid_random_todo()
         response = self.client.post(reverse('todo-list'),
                                     new_todo,
